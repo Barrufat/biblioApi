@@ -9,9 +9,9 @@ const indexController = require('./routes/index-controller');
 //creamos una nueva aplicación express
 const app = express();
 
-//necesario para poder recibir datos en json
-app.use(express.json());
-app.use(cors());
+
+app.use(express.json()); //necesario para poder recibir datos en json
+app.use(cors()); //evita problemas al conectar desde otro servidor
 
 //las ruta "/" se gestiona en indexController
 app.use('/', indexController);

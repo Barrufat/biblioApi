@@ -3,7 +3,7 @@ const router = express.Router();
 
 
 router.get('/', function (req, res, next) {
-    res.send("API Pokemon")
+    res.send("Estas en la API Pokemon")
     });
 
 module.exports = router;

@@ -1,5 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
+
 
 //requerimos el index.js de models que inicializa sequelize
 const modelos = require('../models/index');
@@ -17,7 +20,7 @@ const modelos = require('../models/index');
 
 router.get('/', function (req, res, next) {
     //findAll es un método de sequelize!
-    modelos.Pokemon.findAll( {limit: 500})
+    modelos.Pokemon.findAll({ limit: 500 })
         .then(pokemons => res.json({
             ok: true,
             data: pokemons
@@ -26,7 +29,27 @@ router.get('/', function (req, res, next) {
             ok: false,
             error: error
         }))
-    });
+});
+
+
+
+router.get('/character/:value', function (req, res, next) {
+    //findAll es un método de sequelize!
+    modelos.Pokemon.findAll({ limit: 500 })
+        .then(pokemons => {
+            const caracterBuscado = req.params.value;
+            const resultado = pokemons.filter(el => el.caracter.includes(caracterBuscado));
+
+            res.json({
+                ok: true,
+                data: resultado
+            })
+        })
+        .catch(error => res.json({
+            ok: false,
+            error: error
+        }))
+});
 
 // GET de tipo /api/pokemons/7
 // petición de UN pokemon, con ID=7
@@ -36,7 +59,7 @@ router.get('/', function (req, res, next) {
 // expresada en forma de objeto: { where: {id:req.params.id}}
 
 router.get('/:id', function (req, res, next) {
-    modelos.Pokemon.findOne({ where: {id: req.params.id}} )
+    modelos.Pokemon.findOne({ where: { id: req.params.id } })
         // .then(pokemon => pokemon.get({plain: true}))
         .then(pokemon => res.json({
             ok: true,
@@ -46,7 +69,28 @@ router.get('/:id', function (req, res, next) {
             ok: false,
             error: error
         }))
-    });
+});
+
+
+router.get('/char/:value', function (req, res, next) {
+    modelos.Pokemon.findAll({
+        where: {
+            caracter: {
+                [Op.like]: '%' + req.params.value + '%'
+            }
+        }
+    })
+        // .then(pokemon => pokemon.get({plain: true}))
+        .then(pokemon => res.json({
+            ok: true,
+            data: pokemon
+        }))
+        .catch(error => res.json({
+            ok: false,
+            error: error
+        }))
+});
+
 
 
 
@@ -58,42 +102,42 @@ router.get('/:id', function (req, res, next) {
 // en la base de datos y e actualiza su ID!
 // igualmente se devuelve el objeto creado
 
-router.post('/', function(req, res, next) {
+router.post('/', function (req, res, next) {
     modelos.Pokemon.create(req.body)
-    .then((item) => item.save())
-    .then((item)=>res.json({ok: true, data:item}))
-    .catch((error)=>res.json({ok:false, error}))
+        .then((item) => item.save())
+        .then((item) => res.json({ ok: true, data: item }))
+        .catch((error) => res.json({ ok: false, error }))
 });
- 
+
 
 
 // PUT a /api/pokemons/X 
 // en primer lugar se localiza el pokemon con id=X en la BDD
 // a continuación, mediante "update", el objeto se actualiza con los datos
 // presentes en el "body"
-router.put('/:id', function(req, res, next) {
-    modelos.Pokemon.findOne({ where: {id: req.params.id}} )
-    .then((poke)=>
-        poke.update(req.body)
-    )
-    .then((ret)=> res.json({
-        ok: true,
-        data: ret
-    }))
-    .catch(error => res.json({
-        ok: false,
-        error: error
-    }));
+router.put('/:id', function (req, res, next) {
+    modelos.Pokemon.findOne({ where: { id: req.params.id } })
+        .then((poke) =>
+            poke.update(req.body)
+        )
+        .then((ret) => res.json({
+            ok: true,
+            data: ret
+        }))
+        .catch(error => res.json({
+            ok: false,
+            error: error
+        }));
 });
- 
+
 
 
 // DELETE a /api/pokemons/X 
 // se elimina el registro con id = X con elmétodo sequelize "destroy"
-router.delete('/:id', function(req, res, next) {
-    modelos.Pokemon.destroy({ where: {id: req.params.id}} )
-    .then((data)=>res.json({ok: true, data}))
-    .catch((error)=>res.json({ok:false, error}))
+router.delete('/:id', function (req, res, next) {
+    modelos.Pokemon.destroy({ where: { id: req.params.id } })
+        .then((data) => res.json({ ok: true, data }))
+        .catch((error) => res.json({ ok: false, error }))
 });
 
 
