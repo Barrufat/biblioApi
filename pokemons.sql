@@ -1,3 +1,4 @@
+
 -- MySQL dump 10.13  Distrib 8.0.28, for Linux (x86_64)
 --
 -- Host: localhost    Database: pokemons
@@ -18,6 +19,10 @@
 --
 -- Table structure for table `pokemons`
 --
+
+CREATE DATABASE  IF NOT EXISTS `pokemons` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `pokemons`;
+
 
 DROP TABLE IF EXISTS `pokemons`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -49,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-01 15:11:57
+-- Dump completed on 2022-04-01 15:23:36
