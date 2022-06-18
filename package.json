@@ -6,9 +6,17 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Barrufat/BibliotecaApi.git"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Barrufat/BibliotecaApi/issues"
+  },
+  "homepage": "https://github.com/Barrufat/BibliotecaApi#readme",
   "description": "",
   "dependencies": {
     "cors": "^2.8.5",
