@@ -60,11 +60,56 @@ router.get('/casilla/:casilla', function (req, res, next) {
         }))
 });
 
+// router.get('/nombre/:nombre', function (req, res, next) {
+//     Libro.findAll({ where: { nombre: req.params.nombre } })
+//         // .then(pokemon => pokemon.get({plain: true}))
+//         .then(libros => res.json({
+//             ok: true,
+//             data: libros
+//         }))
+//         .catch(error => res.json({
+//             ok: false,
+//             error: error
+//         }))
+// });
 
-router.get('/genero/:value', function (req, res, next) {
+// router.get('/autorx/:autorx', function (req, res, next) {
+//     Libro.findAll({ where: { autorx: req.params.autorx } })
+//         // .then(pokemon => pokemon.get({plain: true}))
+//         .then(libros => res.json({
+//             ok: true,
+//             data: libros
+//         }))
+//         .catch(error => res.json({
+//             ok: false,
+//             error: error
+//         }))
+// });
+
+
+router.get('/nombre/:value', function (req, res, next) {
     Libro.findAll({
         where: {
-            genero: {
+            nombre: {
+                [Op.like]: '%' + req.params.value + '%'
+            }
+        }
+    })
+        // .then(pokemon => pokemon.get({plain: true}))
+        .then(pokemon => res.json({
+            ok: true,
+            data: pokemon
+        }))
+        .catch(error => res.json({
+            ok: false,
+            error: error
+        }))
+});
+
+router.get('/autorx/:value', function (req, res, next) {
+    Libro.findAll({
+        where: {
+            autorx: {
                 [Op.like]: '%' + req.params.value + '%'
             }
         }
@@ -82,23 +127,23 @@ router.get('/genero/:value', function (req, res, next) {
 
 
 
-router.get('/character/:value', function (req, res, next) {
-    //findAll es un método de sequelize!
-    modelos.Pokemon.findAll({ limit: 500 })
-        .then(pokemons => {
-            const caracterBuscado = req.params.value;
-            const resultado = pokemons.filter(el => el.caracter.includes(caracterBuscado));
+// router.get('/buscar/:value', function (req, res, next) {
+//     //findAll es un método de sequelize!
+//     Libro.findAll({ limit: 500 })
+//         .then(libros => {
+//             const caracterBuscado = req.params.value;
+//             const resultado = libros.filter(el => el.caracter.includes(caracterBuscado));
 
-            res.json({
-                ok: true,
-                data: resultado
-            })
-        })
-        .catch(error => res.json({
-            ok: false,
-            error: error
-        }))
-});
+//             res.json({
+//                 ok: true,
+//                 data: resultado
+//             })
+//         })
+//         .catch(error => res.json({
+//             ok: false,
+//             error: error
+//         }))
+// });
 
 
 // POST a /api/pokemons creamos un nuevo registro
@@ -108,8 +153,8 @@ router.get('/character/:value', function (req, res, next) {
 // en la base de datos y e actualiza su ID!
 // igualmente se devuelve el objeto creado
 
-router.post('/', function (req, res, next) {
-    modelos.Pokemon.create(req.body)
+router.post('/create', function (req, res, next) {
+    Libro.create(req.body)
         .then((item) => item.save())
         .then((item) => res.json({ ok: true, data: item }))
         .catch((error) => res.json({ ok: false, error }))
@@ -141,7 +186,7 @@ router.put('/:id', function (req, res, next) {
 // DELETE a /api/pokemons/X 
 // se elimina el registro con id = X con elmétodo sequelize "destroy"
 router.delete('/:id', function (req, res, next) {
-    modelos.Pokemon.destroy({ where: { id: req.params.id } })
+    Libro.destroy({ where: { id: req.params.id } })
         .then((data) => res.json({ ok: true, data }))
         .catch((error) => res.json({ ok: false, error }))
 });
