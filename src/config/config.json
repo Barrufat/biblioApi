@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "root",
-    "password": null,
-    "database": "libros",
-    "host": "127.0.0.1",
+    "username": "uy3ghrqayzzzra98",
+    "password": "if87oqRAYfla9rSzpr7s",
+    "database": "b7xssaerg4cs7znnnw6u",
+    "host": "b7xssaerg4cs7znnnw6u-mysql.services.clever-cloud.com",
     "dialect": "mysql"
   },
   "test": {
